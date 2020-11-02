@@ -1,35 +1,32 @@
+
 # Happy Coding!
 
-service: rsschool-frontend-service
+service: aws-rs-school-app
+
 frameworkVersion: '2'
 
 provider:
   name: aws
-  region: eu-west-1
   runtime: nodejs12.x
+  region: eu-west-1
   stage: dev
 
 plugins:
   - serverless-finch
   - serverless-single-page-app-plugin
 
-##
-## packages:
-##   - **/**
-##   - !build/*
-
-
 custom:
+  ## Serverless-finch configuration
   client:
-    bucketName: rsschool-frontend
+    bucketName: aws-rs-school-app
     distributionFolder: build
     indexDocument: index.html
     manageResources: false
-  ## sls-single-page-app-plugin
+  ## Serverless-single-page-app-plugin configuration:
   s3LocalPath: ${self:custom.client.distributionFolder}/
   s3BucketName: ${self:custom.client.bucketName}
 
-# you can add CloudFormation resource templates here
+
 resources:
   Resources:
     ## Specifying the S3 Bucket
@@ -77,23 +74,15 @@ resources:
           Origins:
             - DomainName: ${self:custom.s3BucketName}.s3.amazonaws.com
               ## An identifier for the origin which must be unique within the distribution
-              Id: awstask2
+              Id: s3origin
               ## In case you don't want to restrict the bucket access use CustomOriginConfig and remove S3OriginConfig
               S3OriginConfig:
                 OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${OriginAccessIdentity}
-             # CustomOriginConfig:
-             #   HTTPPort: 80
-             #   HTTPSPort: 443
-             #   OriginProtocolPolicy: https-only
+
           Enabled: true
           IPV6Enabled: true
           HttpVersion: http2
-          ## Uncomment the following section in case you are using a custom domain
-          # Aliases:
-          # - mysite.example.com
           DefaultRootObject: index.html
-          ## Since the Single Page App is taking care of the routing we need to make sure ever path is served with index.html
-          ## The only exception are files that actually exist e.h. app.js, reset.css
           CustomErrorResponses:
             - ErrorCode: 404
               ResponseCode: 200
@@ -107,12 +96,11 @@ resources:
                 - Access-Control-Request-Method
                 - Origin
                 - Authorization
-              ## Defining if and how the QueryString and Cookies are forwarded to the origin which in this case is S3
               QueryString: false
               Cookies:
                 Forward: none
             ## The origin id defined above
-            TargetOriginId: awstask2
+            TargetOriginId: s3origin
             ## The protocol that users can use to access the files in the origin. To allow HTTP use `allow-all`
             ViewerProtocolPolicy: redirect-to-https
             Compress: true
@@ -120,11 +108,6 @@ resources:
           ## The certificate to use when viewers use HTTPS to request objects.
           ViewerCertificate:
             CloudFrontDefaultCertificate: 'true'
-          ## Uncomment the following section in case you want to enable logging for CloudFront requests
-          # Logging:
-          #   IncludeCookies: 'false'
-          #   Bucket: mylogs.s3.amazonaws.com
-          #   Prefix: myprefix
 
   Outputs:
     WebAppS3BucketOutput:

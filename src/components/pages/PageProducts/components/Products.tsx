@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { fetchProducts } from "api/products";
+import API_PATHS from "constants/apiPaths";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -49,7 +50,7 @@ export default function Products() {
           <Card className={classes.card}>
             <CardMedia
               className={classes.cardMedia}
-              image={`https://source.unsplash.com/random?sig=${index}`}
+              image={API_PATHS.imageHost(product.imageName)}
               title="Image title"
             />
             <CardContent className={classes.cardContent}>
