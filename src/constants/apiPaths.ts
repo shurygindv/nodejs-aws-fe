@@ -1,5 +1,5 @@
 
-const BASE = 'https://qt1ja1wqr9.execute-api.eu-west-1.amazonaws.com';
+const BASE = 'https://qt1ja1wqr9.execute-api.eu-west-1.amazonaws.com/dev';
 
 const API_PATHS = {
   product: "https://.execute-api.eu-west-1.amazonaws.com/dev",
@@ -8,9 +8,9 @@ const API_PATHS = {
   bff: BASE,
   // =
   products:
-    `${BASE}/dev/products`,
+    `${BASE}/products`,
   imageHost: (fileName: string) =>
-    `${BASE}/dev/static/${fileName}`,
+    `${BASE}/static/${fileName}`,
 };
 
 export default API_PATHS;

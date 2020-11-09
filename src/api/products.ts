@@ -11,8 +11,15 @@ const fetchProducts = () => {
     .then((res: Response) => res.data.result.items);
 };
 
-const addProductToBasketAsync = (product: Product) => {
-  return axios.post(API_PATHS.products, product);
+const addProductToBasketAsync = (p: Product) => {
+  const params = new URLSearchParams();
+
+  params.append("title", p.title);
+  params.append("description", p.description);
+  params.append("price", `${p.price}`);
+  params.append("count", `${p.count}`);
+
+  return axios.post(API_PATHS.products, params);
 };
 
 export { addProductToBasketAsync, fetchProducts };
