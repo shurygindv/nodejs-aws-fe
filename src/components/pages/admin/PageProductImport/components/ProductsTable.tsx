@@ -12,12 +12,14 @@ import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
 import {formatAsPrice} from "utils/utils";
 
+import { fetchProducts } from 'api/products';
+
 export default function ProductsTable() {
   const [products, setProducts] = useState<any>([]);
 
   useEffect(() => {
-    axios.get(`${API_PATHS.bff}/products`)
-      .then(res => setProducts(res.data));
+    fetchProducts()
+      .then(items => setProducts(items));
   }, []);
 
   const onDelete = (id: string) => {
