@@ -14,22 +14,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const IMPORT_TITLE = "Import Products CSV";
+const IMPORT_TITLE_IN_PROGRESS = "Import Products CSV (wait...)";
+
 export default function PageProductImport() {
   const classes = useStyles();
+
+  const [title, setTitle] = React.useState(IMPORT_TITLE);
   const [someUpdatesId, setSomeUpdates] = React.useState(0);
 
   const handleUpdate = () => {
+    setTitle(IMPORT_TITLE_IN_PROGRESS);
+
     setTimeout(() => {
-      setSomeUpdates(i => ++i);
-    }, 2000); // lambda-parser will trigger in few seconds
-  }
+      setTitle(IMPORT_TITLE);
+      setSomeUpdates((i) => ++i);
+    }, 4000);
+  };
 
   return (
     <div className={classes.content}>
       <Box display="flex" alignItems="center">
         <CSVFileImport
           url={`${API_PATHS.import}/import`}
-          title="Import Products CSV"
+          title={title}
           onUpload={handleUpdate}
         />
         <Button
