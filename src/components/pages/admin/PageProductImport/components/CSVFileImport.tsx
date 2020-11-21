@@ -10,12 +10,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type CSVFileImportProps = {
+type Props = {
   url: string,
-  title: string
+  title: string,
+  onUpload(): void;
 };
 
-export default function CSVFileImport({url, title}: CSVFileImportProps) {
+export const CSVFileImport: React.FC<Props> = ({url, title, onUpload}) => {
   const classes = useStyles();
   const [file, setFile] = useState<any>();
 
@@ -41,12 +42,15 @@ export default function CSVFileImport({url, title}: CSVFileImportProps) {
       })
       console.log('File to upload: ', file.name)
       console.log('Uploading to: ', response.data)
-      const result = await fetch(response.data, {
+      
+      const result = await fetch(response.data.result, {
         method: 'PUT',
         body: file
       })
-      console.log('Result: ', result)
+      console.log('Result: ', result);
+      
       setFile('');
+      onUpload();
     }
   ;
 
