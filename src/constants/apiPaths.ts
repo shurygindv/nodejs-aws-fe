@@ -1,5 +1,5 @@
 
-const PRODUCT_BASE = 'https://qt1ja1wqr9.execute-api.eu-west-1.amazonaws.com/dev';
+const PRODUCT_BASE = 'https://0zd9g6b1yf.execute-api.eu-west-1.amazonaws.com/dev';
 const IMPORT_BASE = 'https://jkzgfse086.execute-api.eu-west-1.amazonaws.com/dev';
 
 const API_PATHS = {

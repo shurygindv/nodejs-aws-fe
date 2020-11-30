@@ -1,21 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'index.css';
-import App from 'components/App/App';
+import { App } from 'components/App/App';
 import {store} from 'store/store';
 import {Provider} from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import axios from 'axios';
 
+const isForbidden = (n: number) => n === 403;
+const isDenied = (n: number) => n === 401;
+
 axios.interceptors.response.use(
   response => {
     return response;
   },
   function(error) {
-    if (error.response.status === 400) {
-      alert(error.response.data?.data);
+    const { data, status } = error.response;
+
+    if (isDenied(status) || isForbidden(status)) {
+      alert(`Response: ${JSON.stringify(data)}`);
     }
+
+    if (status === 400) {
+      alert(data?.data);
+    }
+
     return Promise.reject(error.response);
   }
 );
