@@ -13,6 +13,8 @@ const API_PATHS = {
     `${PRODUCT_BASE}/products`,
   imageHost: (fileName: string) =>
     `${PRODUCT_BASE}/static/${fileName}`,
+
+  cart: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
 };
 
 export default API_PATHS;
