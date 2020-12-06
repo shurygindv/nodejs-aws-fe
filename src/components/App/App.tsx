@@ -13,7 +13,16 @@ import PageOrders from "components/pages/PageOrders/PageOrders";
 import PageOrder from "components/pages/PageOrder/PageOrder";
 import PageProductImport from "components/pages/admin/PageProductImport/PageProductImport";
 
-function App() {
+const saveCredentials = () => {
+  localStorage.setItem("authorization_token", "c2h1cnlnaW5kdjE6c29tZVBhc3N3b3Jk");
+};
+
+const getCredentials = () => {
+  return localStorage.getItem("authorization_token");
+}
+
+const App = () => {
+  React.useEffect(saveCredentials, [])
 
   return (
     <Router>
@@ -45,4 +54,8 @@ function App() {
   );
 }
 
-export default App;
+export {
+  App,
+
+  getCredentials
+}
