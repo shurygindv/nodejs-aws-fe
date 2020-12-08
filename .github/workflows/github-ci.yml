@@ -1,0 +1,28 @@
+
+name: CI Node.js AWS FE
+
+on: [push, pull_request]
+
+jobs:
+###############################
+  build-frontend:
+    name: build-frontend
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [12.x]
+        
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2.1.2
+
+      - name: install dependencies
+        run: npm i
+
+      - name: sls packing
+        run: npm run pack
