@@ -13,6 +13,8 @@ const API_PATHS = {
     `${PRODUCT_BASE}/products`,
   imageHost: (fileName: string) =>
     `${PRODUCT_BASE}/static/${fileName}`,
+
+  cart: 'http://shurygindv-rs-cart-api-dev.eu-west-1.elasticbeanstalk.com/api',
 };
 
 export default API_PATHS;
